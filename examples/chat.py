@@ -21,8 +21,13 @@ def echo_bot(message: str) -> str:
 
 @instantui.chat
 def stats_bot(message: str, history: list[dict]) -> str:
-    """Reports how many turns we've exchanged so far."""
+    """Reports how many turns we've exchanged so far.
+
+    Anything ``print()``-ed during the call appears as captured stdout above
+    the bot's reply — useful for showing intermediate steps from a tool call.
+    """
     user_turns = sum(1 for m in history if m["role"] == "user")
+    print(f"[stats_bot] turn {user_turns + 1}; history has {len(history)} items")
     return (
         f"This is turn **{user_turns + 1}**.\n\n"
         f"You typed `{len(message)}` characters.\n\n"

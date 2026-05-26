@@ -240,11 +240,20 @@
       log.scrollTop = log.scrollHeight;
     }
 
-    function appendBot(block) {
+    function appendBot(block, stdout) {
       const wrap = document.createElement("div");
       wrap.className = "chat__msg chat__msg--bot";
       const bubble = document.createElement("div");
       bubble.className = "chat__bubble";
+      if (stdout && stdout.length) {
+        const std = document.createElement("div");
+        std.className = "chat__stdout";
+        std.innerHTML =
+          '<div class="chat__stdout-label">stdout</div><pre>' +
+          escapeHtml(stdout) +
+          "</pre>";
+        bubble.appendChild(std);
+      }
       bubble.appendChild(renderBlock(block));
       wrap.appendChild(bubble);
       log.appendChild(wrap);
@@ -294,7 +303,7 @@
         const json = await res.json();
         pending.remove();
         if (json.ok) {
-          appendBot(json.reply);
+          appendBot(json.reply, json.stdout);
           const replyText =
             json.reply && typeof json.reply.value === "string"
               ? json.reply.value

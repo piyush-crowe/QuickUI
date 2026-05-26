@@ -142,8 +142,17 @@ def make_handler(
                 if "history" in sig_params:
                     kwargs["history"] = history
 
-                result = entry.fn(**kwargs)
-                self._send_json(200, {"ok": True, "reply": _chat_block(result)})
+                buf = io.StringIO()
+                with contextlib.redirect_stdout(buf):
+                    result = entry.fn(**kwargs)
+                self._send_json(
+                    200,
+                    {
+                        "ok": True,
+                        "reply": _chat_block(result),
+                        "stdout": buf.getvalue(),
+                    },
+                )
             except Exception as exc:  # noqa: BLE001
                 self._send_json(
                     200,

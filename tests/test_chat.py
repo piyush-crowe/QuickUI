@@ -136,6 +136,32 @@ def test_chat_endpoint_skips_history_when_unwanted(chat_server):
     assert out["reply"]["value"] == "HELLO"
 
 
+def test_chat_endpoint_captures_stdout():
+    reg = Registry()
+
+    @reg.register_chat
+    def loud(message: str) -> str:
+        print("step 1")
+        print("step 2")
+        return message
+
+    handler = make_handler(reg)
+    server = HTTPServer(("127.0.0.1", 0), handler)
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    try:
+        host, port = server.server_address
+        out = _post(f"http://{host}:{port}/chat/0", {"message": "hi"})
+    finally:
+        server.shutdown()
+        server.server_close()
+        t.join(timeout=1)
+
+    assert out["ok"] is True
+    assert "step 1" in out["stdout"]
+    assert "step 2" in out["stdout"]
+
+
 def test_chat_endpoint_rejects_form_index(chat_server):
     url, _ = chat_server
     # index 2 is the form-style `add`; /chat/2 must 404.
