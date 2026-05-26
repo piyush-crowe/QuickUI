@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(python --version)",
+      "PowerShell(python -c \"import sys; print\\(sys.executable\\)\")",
+      "PowerShell(python -m pip install -e \".[dev]\" 2>&1)",
+      "PowerShell(python -m pytest -x)",
+      "PowerShell(python -m ruff check --fix .)",
+      "PowerShell(python -m instantui --version)",
+      "PowerShell(python -m instantui --help)",
+      "PowerShell(\\(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/\" -UseBasicParsing\\).Content -match 'developer: piyush')",
+      "PowerShell(\\(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/static/style.css\" -UseBasicParsing\\).Content -match '--accent: oklch\\\\\\(0.15')",
+      "PowerShell(python -m pytest -q 2>&1)",
+      "PowerShell(python -m ruff check .)",
+      "PowerShell(python examples/showcase.py)",
+      "PowerShell($body = '{\"topic\": \"demo\"}'; \\(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/run/5\" -Method POST -Body $body -ContentType \"application/json\" -UseBasicParsing\\).Content)",
+      "PowerShell($r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/run/9\" -Method POST -Body '{}' -ContentType \"application/json\" -UseBasicParsing; $r.Content.Substring\\(0, [math]::Min\\(400, $r.Content.Length\\)\\))",
+      "PowerShell(\\(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/\" -UseBasicParsing\\).StatusCode)",
+      "PowerShell($r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/run/8\" -Method POST -Body '{}' -ContentType \"application/json\" -UseBasicParsing; $r.Content.Substring\\(0, [math]::Min\\(500, $r.Content.Length\\)\\))"
+    ]
+  }
+}

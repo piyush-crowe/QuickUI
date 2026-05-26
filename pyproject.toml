@@ -1,0 +1,77 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "instantui"
+dynamic = ["version"]
+description = "Wrap a Python function and get an instant web UI."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Piyush Piyush", email = "piyush.piyush@crowe.com" }]
+keywords = ["ui", "web", "framework", "developer-tools", "prototyping"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: User Interfaces",
+  "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7",
+  "pytest-cov>=4",
+  "ruff>=0.4",
+  "mypy>=1.8",
+]
+
+[project.scripts]
+instantui = "instantui.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/piyushpy/QuickUI"
+Repository = "https://github.com/piyushpy/QuickUI"
+Issues = "https://github.com/piyushpy/QuickUI/issues"
+Changelog = "https://github.com/piyushpy/QuickUI/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/instantui/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/instantui"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/instantui", "tests", "examples", "README.md", "LICENSE", "CHANGELOG.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "PL"]
+ignore = ["PLR0913", "PLR0911"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["PLR2004", "S101"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.coverage.run]
+source = ["instantui"]
+branch = true
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+files = ["src/instantui"]
