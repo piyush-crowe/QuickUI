@@ -5,6 +5,8 @@ All notable changes to this project are documented here. The format follows
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.1] — 2026-05-26
 ### Added
 - `@instantui.chat` decorator — renders a function with a `message` parameter
   (and optional `history`) as a chat card with message log + input box.
@@ -17,6 +19,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `list[dict]` and pandas `DataFrame` returns render as HTML tables.
 - `instantui.run(title="…")` sets the page heading; CLI gets `--title`.
 - Top-of-page nav bar with the "InstantUI" brand mark and a developer line.
+- Chat cards now display captured `print()` output above the bot's reply, the
+  same way form cards do.
+- `docs/` — getting started, forms, chat, types reference, CLI, architecture.
 
 ### Changed
 - `/run/<idx>` response now returns `result` as a `{kind, value}` block instead
